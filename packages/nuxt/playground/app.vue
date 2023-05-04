@@ -96,6 +96,22 @@ function loadImage() {
             Lazy loading will only be triggered when the image is clicked.
           </p>
         </div>
+
+        <div class="space-y-2">
+          <PlaygroundDivider>Lazy load immediately</PlaygroundDivider>
+          <UnLazyImage
+            :immediate-load="true"
+            :lazy-load="false"
+            thumbhash="HBkSHYSIeHiPiHh8eJd4eTN0EEQG"
+            src="/images/fall-evan-wallace.jpg"
+            width="640"
+            height="320"
+            style="aspect-ratio: 3/2"
+          />
+          <p class="text-sm text-gray-500">
+            The image loads as soon as the prop `immediateLoad` is set to `true`, even if it is not yet visible.
+          </p>
+        </div>
       </div>
     </div>
   </main>

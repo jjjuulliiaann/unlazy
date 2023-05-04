@@ -6,7 +6,7 @@ export default {
 
 <script setup lang="ts">
 /* eslint-disable import/first */
-import { createPlaceholderFromHash, lazyLoad } from 'unlazy'
+import { createPlaceholderFromHash, lazyLoad, loadImage } from 'unlazy'
 import type { ImgHTMLAttributes } from 'vue'
 import { computed, onBeforeUnmount, ref, useRuntimeConfig, watchEffect } from '#imports'
 
@@ -42,6 +42,11 @@ const props = withDefaults(
      * @default true
      */
     lazyLoad?: boolean
+    /**
+     * A flag to indicate whether the image should be loaded immediately. As soon as this props is set to `true`, the image will load, even if it is not yet visible.
+     * @default false
+     */
+    immediateLoad?: boolean
     /** Whether the ThumbHash or BlurHash should be decoded on the server. Overrides the global module configuration if set. */
     ssr?: boolean
   }>(),
@@ -56,6 +61,7 @@ const props = withDefaults(
     placeholderSize: undefined,
     placeholderRatio: undefined,
     lazyLoad: true,
+    immediateLoad: false,
     ssr: undefined,
   },
 )
@@ -97,6 +103,9 @@ watchEffect(() => {
 
     lastHash = hash.value
   }
+
+  if (props.immediateLoad)
+    loadImage(target.value);
 
   if (!props.lazyLoad)
     return
